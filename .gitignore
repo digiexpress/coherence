@@ -37,3 +37,15 @@ target/
 ### RESOURCES ###
 deploy/storage/
 logs
+
+# Created by https://www.toptal.com/developers/gitignore/api/gradle
+# Edit at https://www.toptal.com/developers/gitignore?templates=gradle
+
+### Gradle ###
+.gradle
+build/
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamecache
+**/build/
+gradle/wrapper/gradle-wrapper.properties
