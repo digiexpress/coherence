@@ -54,4 +54,53 @@ class RecursiveMessageResolverTest {
         var expected = "the key v1 is ok";
         assertEquals(expected, this.resolver.resolve(inputTemplate, inputParameterMapping));
     }
+
+    @Test
+    void testResolve_whenMultipleInjectionsAndDefaultValues_thenOk() {
+        var inputTemplate = "a {k1} b {k2} c {k3:-v3} d {k4} e {k5:-v5} f {k6:-v7}";
+        var inputParameterMapping = Map.of(
+                "k1", (Object) "v1",
+                "k2", "v2",
+                "k4", "v4",
+                "k6", "v6"
+        );
+        var expected = "a v1 b v2 c v3 d v4 e v5 f v6";
+        assertEquals(expected, this.resolver.resolve(inputTemplate, inputParameterMapping));
+    }
+
+    @Test
+    void testResolve_whenSimpleRecursiveCase_thenOk() {
+        var inputTemplate = "a {k1} b";
+        var inputParameterMapping = Map.of(
+                "k1", (Object) "{k2}",
+                "k2", "{k3}",
+                "k3", "k4"
+        );
+        var expected = "a k4 b";
+        assertEquals(expected, this.resolver.resolve(inputTemplate, inputParameterMapping));
+    }
+
+    @Test
+    void testResolve_whenComplexRecursiveCase_thenOk() {
+        var inputTemplate = "a k{k{k{v}}} b";
+        var inputParameterMapping = Map.of(
+                "v", (Object) "1",
+                "k1", "2",
+                "k2", "3"
+        );
+        var expected = "a k3 b";
+        assertEquals(expected, this.resolver.resolve(inputTemplate, inputParameterMapping));
+    }
+
+    @Test
+    void testResolve_whenAllCases_thenOk() {
+        var inputTemplate = "a k{k{k{v}}} b {k2} c {k3:-default}";
+        var inputParameterMapping = Map.of(
+                "v", (Object) "1",
+                "k1", "2",
+                "k2", "3"
+        );
+        var expected = "a k3 b 3 c default";
+        assertEquals(expected, this.resolver.resolve(inputTemplate, inputParameterMapping));
+    }
 }
