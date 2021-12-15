@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
@@ -137,5 +138,63 @@ class TranslatableMessageTest {
                 .put("p2", "v2");
 
         assertEquals(expectedResult, translatable.toString());
+    }
+
+    @Test
+    void testGet_whenCalledOnNonexistentKey_thenReturnsNull() {
+        var translatable = new TranslatableMessage("testKey");
+        assertNull(translatable.get("paramKey"));
+    }
+
+    @Test
+    void testGet_whenCalledOnExistentKey_thenOk() {
+        var expectedValue = "aValue";
+        var expectedKey = "aKey";
+        var translatable = new TranslatableMessage("testKey").put(expectedKey, expectedValue);
+        assertEquals(expectedValue, translatable.get(expectedKey));
+    }
+
+    @Test
+    void testGetOrElse_whenCalledOnNonexistentKey_thenReturnsAlternative() {
+        var expectedValue = "aValue";
+        var translatable = new TranslatableMessage("testKey");
+        assertEquals(expectedValue, translatable.getOrElse("paramKey", expectedValue));
+    }
+
+    @Test
+    void testGetOrElse_whenCalledOnExistentKey_thenReturnsTheOriginalValue() {
+        var expectedValue = "aValue";
+        var expectedKey = "aKey";
+        var translatable = new TranslatableMessage("testKey").put(expectedKey, expectedValue);
+        assertEquals(expectedValue, translatable.getOrElse(expectedKey, "anotherKey"));
+    }
+
+    @Test
+    void testEquals_whenCalledOnDissimilarReferences_returnsTrue() {
+        var t1 = new TranslatableMessage("testKey").put("aKey", "aValue");
+        var t2 = new TranslatableMessage("testKey").put("aKey", "aValue");
+        assertEquals(t1, t2);
+    }
+
+    @Test
+    void testHashCode_whenCalledOnDissimilarReferences_returnsTrue() {
+        var t1 = new TranslatableMessage("testKey").put("aKey", "aValue");
+        var t2 = new TranslatableMessage("testKey").put("aKey", "aValue");
+        assertEquals(t1.hashCode(), t2.hashCode());
+    }
+
+    @Test
+    void testEquals_whenCalledOnDissimilarParametersOrKey_returnsFalse() {
+        var objectList = List.of(
+                new TranslatableMessage("testKey"),
+                new TranslatableMessage("testKey").put("aKey", "aValue"),
+                new TranslatableMessage("anotherKey").put("aKey", "aValue"),
+                new TranslatableMessage("anotherKey").put("otherKey", "otherValue"),
+                new Object());
+
+        for (int i = 0; i < objectList.size(); i++)
+            for (int j = 0; j < objectList.size(); j++)
+                if (i != j)
+                    assertNotEquals(objectList.get(i).hashCode(), objectList.get(j).hashCode());
     }
 }

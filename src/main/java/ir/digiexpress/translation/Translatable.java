@@ -1,10 +1,8 @@
 package ir.digiexpress.translation;
 
 
-import com.google.common.base.CaseFormat;
-
 import java.io.Serializable;
-import java.util.Collections;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -13,17 +11,13 @@ import java.util.Map;
  */
 public interface Translatable extends Serializable {
     /**
-     * Each translatable has a lookup key inside a MessageSource e.g. "translatableLookupKey".
+     * Each translatable has a lookup key inside a MessageSource e.g. "translatableLookup.key".
      * This key will be later used by the {@link Translator} to lookup for the message template.
-     * You are encouraged to follow the lowerCamelCase naming convention for these keys.
-     * To avoid the reflection overload, just implement the method yourself.
+     * You are encouraged to follow the lowerCamelCase naming convention for the key.
      *
-     * @return the key to lookup in MessageSource.
-     * default implementation gets the key from the class name
+     * @return the key to be later looked up inside {@link Translator#lookup(String, Locale)}
      */
-    default String getKey() {
-        return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, this.getClass().getSimpleName());
-    }
+    String getKey();
 
     /**
      * These are the parameters that will be injected into the {@link Translatable}'s message
@@ -32,7 +26,5 @@ public interface Translatable extends Serializable {
      *
      * @return a mapping of parameter keys (String) to parameter values (Object)
      */
-    default Map<String, Object> getParameters() {
-        return Collections.emptyMap();
-    }
+    Map<String, Object> getParameters();
 }
