@@ -1,4 +1,4 @@
-package ir.digiexpress.translation;
+package ir.digiexpress.translation.translatable;
 
 import java.util.HashMap;
 import java.util.Map;

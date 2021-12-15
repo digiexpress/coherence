@@ -1,5 +1,7 @@
-package ir.digiexpress.translation;
+package ir.digiexpress.translation.translatable;
 
+
+import ir.digiexpress.translation.translator.Translator;
 
 import java.io.Serializable;
 import java.util.Locale;

@@ -1,4 +1,4 @@
-package ir.digiexpress.translation;
+package ir.digiexpress.translation.translatable;
 
 import com.google.common.base.CaseFormat;
 

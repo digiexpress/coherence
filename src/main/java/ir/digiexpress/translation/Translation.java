@@ -1,5 +1,7 @@
 package ir.digiexpress.translation;
 
+import ir.digiexpress.translation.translatable.TranslatableMessage;
+
 /**
  * This class includes static utility methods for any functionalities happening inside
  * {@link ir.digiexpress.translation} package
