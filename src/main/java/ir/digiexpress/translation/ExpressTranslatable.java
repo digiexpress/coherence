@@ -7,8 +7,8 @@ import java.util.Objects;
 import java.util.function.Function;
 
 /**
- * This is probably the most naive implementation of {@link Translatable}.
- * Parameters are put in raw form
+ * This is probably the most naive implementation of {@link Translatable}
+ * which in the parameters are put in raw form. Note that this class is NOT thread safe.
  */
 public class ExpressTranslatable implements Translatable, Serializable {
     protected final String key;
