@@ -3,14 +3,15 @@ package ir.digiexpress.translation;
 
 import com.google.common.base.CaseFormat;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
 
 /**
  * Any translatable "thing" can implement this interface
- * Having a message key and some parameters to inject can lead us to a string form.
+ * Having a message key and some parameters to inject can lead us to a string form in a specified locale.
  */
-public interface Translatable {
+public interface Translatable extends Serializable {
     /**
      * Each translatable has a lookup key inside a MessageSource e.g. "translatableLookupKey".
      * This key will be later used by the {@link Translator} to lookup for the message template.
