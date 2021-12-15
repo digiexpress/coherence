@@ -3,6 +3,7 @@ package ir.digiexpress.translation.translator;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -18,12 +19,12 @@ public class InMemoryTranslator implements Translator {
     public InMemoryTranslator(final MessageResolver resolver,
                               final Map<Pair<String, Locale>, String> messageTemplateMapping) {
         this.resolver = resolver;
-        this.messageTemplateMapping = messageTemplateMapping;
+        this.messageTemplateMapping = Objects.requireNonNullElseGet(messageTemplateMapping, HashMap::new);
     }
 
     @Override
     public String lookup(String key, Locale locale) {
-        return Objects.requireNonNull(this.messageTemplateMapping.get(new ImmutablePair<>(key, locale)), "");
+        return Objects.requireNonNullElse(this.messageTemplateMapping.get(new ImmutablePair<>(key, locale)), "");
     }
 
     @Override
