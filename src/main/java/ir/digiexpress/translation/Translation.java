@@ -4,20 +4,20 @@ package ir.digiexpress.translation;
  * This class includes static utility methods for any functionalities happening inside
  * {@link ir.digiexpress.translation} package
  */
-public class Translations {
+public class Translation {
     /**
      * Just to hide the implicit constructor of this class
      */
-    private Translations() {
+    private Translation() {
     }
 
     /**
-     * Quickly create an {@link TranslatableMessage}
+     * Quickly create a {@link TranslatableMessage}
      *
      * @param key the key of the translatable
-     * @return an express translatable constructed from that key
+     * @return a translatable message constructed from that key
      */
-    public static TranslatableMessage express(final String key) {
+    public static TranslatableMessage message(final String key) {
         return new TranslatableMessage(key, null);
     }
 }
