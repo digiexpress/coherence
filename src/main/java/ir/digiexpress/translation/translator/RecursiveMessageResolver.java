@@ -40,19 +40,20 @@ public class RecursiveMessageResolver implements MessageResolver {
     }
 
     @Override
-    public String declareParameter(String paramKey, String defaultValue) {
+    public String declareParameter(final String paramKey, final String defaultValue) {
         this.validateParamKey(paramKey);
-        return String.format(this.parameterFormatWithDefaultValue, paramKey, defaultValue);
+        return String.format(this.parameterFormatWithDefaultValue, paramKey,
+                Objects.requireNonNullElse(defaultValue, ""));
     }
 
     @Override
-    public String declareParameter(String paramKey) {
+    public String declareParameter(final String paramKey) {
         this.validateParamKey(paramKey);
         return String.format(this.parameterFormatNoDefaultValue, paramKey);
     }
 
     @Override
-    public String resolve(String messageTemplate, Map<String, Object> parameterMapping) {
+    public String resolve(final String messageTemplate, final Map<String, Object> parameterMapping) {
         return this.buildParameterSubstitutor(parameterMapping).replace(messageTemplate);
     }
 
