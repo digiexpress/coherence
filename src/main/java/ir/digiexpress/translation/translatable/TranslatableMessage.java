@@ -98,8 +98,7 @@ public class TranslatableMessage implements Translatable {
     public TranslatableMessage putIfAbsent(final String paramKey,
                                            final Function<String, Object> mapping) {
         this.validateParameterKey(paramKey);
-        if (Objects.isNull(mapping))
-            throw new IllegalArgumentException("the parameter mapping cannot be null");
+        if (Objects.isNull(mapping)) throw new IllegalArgumentException("the parameter mapping cannot be null");
         this.parameters.computeIfAbsent(paramKey, mapping);
         return this;
     }
@@ -117,8 +116,7 @@ public class TranslatableMessage implements Translatable {
      */
     public TranslatableMessage putIfAbsent(final String paramKey,
                                            final Supplier<Object> supplier) {
-        if (Objects.isNull(supplier))
-            throw new IllegalArgumentException("the supplier cannot be null");
+        if (Objects.isNull(supplier)) throw new IllegalArgumentException("the supplier cannot be null");
         this.putIfAbsent(paramKey, s -> supplier.get());
         return this;
     }
@@ -155,9 +153,7 @@ public class TranslatableMessage implements Translatable {
     }
 
     protected final void validateParameterKey(final String paramKey) {
-        if (Objects.isNull(paramKey))
-            throw new IllegalArgumentException("the parameter key cannot be null");
-        if (paramKey.isBlank())
-            throw new IllegalArgumentException("the parameter key cannot be empty");
+        if (Objects.isNull(paramKey)) throw new IllegalArgumentException("the parameter key cannot be null");
+        if (paramKey.isBlank()) throw new IllegalArgumentException("the parameter key cannot be empty");
     }
 }
