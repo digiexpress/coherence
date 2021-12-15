@@ -23,9 +23,9 @@ public class ExpressTranslatable implements Translatable, Serializable {
      */
     public ExpressTranslatable(final String key, final Map<String, Object> parameters) throws IllegalArgumentException {
         if (Objects.isNull(key))
-            throw new IllegalArgumentException("translatable key cannot be null");
+            throw new IllegalArgumentException("key cannot be null");
         if (key.isBlank())
-            throw new IllegalArgumentException("translatable key cannot be empty");
+            throw new IllegalArgumentException("key cannot be empty");
         this.key = key;
         this.parameters = Objects.requireNonNullElseGet(parameters, HashMap::new);
     }
