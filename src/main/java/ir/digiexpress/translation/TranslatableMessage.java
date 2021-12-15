@@ -49,6 +49,26 @@ public class TranslatableMessage implements Translatable {
     }
 
     /**
+     * Retrieves the specified key's value inside the translatable mapping.
+     *
+     * @param paramKey the key to the parameter
+     * @return the value bound to the specified key. returns null if key does not exist
+     */
+    public Object get(final String paramKey) {
+        return this.parameters.get(paramKey);
+    }
+
+    /**
+     * Retrieves the specified key's value inside the translatable mapping.
+     *
+     * @param paramKey the key to the parameter
+     * @return the value bound to the specified key. returns {@code other} if key does not exist
+     */
+    public Object getOrElse(final String paramKey, final Object other) {
+        return this.parameters.getOrDefault(paramKey, other);
+    }
+
+    /**
      * This method will add a parameter key and value to inject inside the message template
      * If the paramKey already exists inside the parameter mapping, the paramValue will override the previous one
      *
@@ -97,6 +117,8 @@ public class TranslatableMessage implements Translatable {
      */
     public TranslatableMessage putIfAbsent(final String paramKey,
                                            final Supplier<Object> supplier) {
+        if (Objects.isNull(supplier))
+            throw new IllegalArgumentException("the supplier cannot be null");
         this.putIfAbsent(paramKey, s -> supplier.get());
         return this;
     }

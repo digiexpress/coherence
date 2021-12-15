@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
-import static ir.digiexpress.translation.Translations.express;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -21,14 +21,14 @@ class TranslatableMessageTest {
     }
 
     @Test
-    void testConstruction_whenParametersArePassedNull_doesNotThrowErrorAndCreatesEmptyParameterMapping() {
+    void testConstruction_whenParametersArePassedNull_thenNoErrorsAndCreatesEmptyParameterMapping() {
         Map<String, Object> expectedParameters = Collections.emptyMap();
         var translatable = new TranslatableMessage("test", null);
         assertEquals(expectedParameters, translatable.getParameters());
     }
 
     @Test
-    void testGetters_whenConstructed_matchesInfo() {
+    void testGetters_whenConstructed_thenMatchesInfo() {
         var expectedKey = "testKey";
         var expectedParams = Map.of("param1", (Object) "val1", "param2", "val2");
 
@@ -40,7 +40,7 @@ class TranslatableMessageTest {
 
     @Test
     void testPut_whenPassedNullOrEmptyParamKey_thenThrowsError() {
-        var translatable = express("testKey");
+        var translatable = new TranslatableMessage("testKey");
         assertThrows(IllegalArgumentException.class, () -> translatable.put(null, "testParam"));
         assertThrows(IllegalArgumentException.class, () -> translatable.put("", "testParam"));
     }
@@ -50,7 +50,7 @@ class TranslatableMessageTest {
         var expectedKey = "testKey";
         var expectedParams = Collections.emptyMap();
 
-        var translatable = express(expectedKey);
+        var translatable = new TranslatableMessage(expectedKey);
         assertEquals(expectedKey, translatable.getKey());
         assertEquals(expectedParams, translatable.getParameters());
 
@@ -64,26 +64,34 @@ class TranslatableMessageTest {
 
     @Test
     void testPutIfNotExists_whenPassedNullOrEmptyParamKey_thenThrowsError() {
-        var translatable = express("testKey");
+        var translatable = new TranslatableMessage("testKey");
         assertThrows(IllegalArgumentException.class, () -> translatable.putIfAbsent(null, (s) -> "val"));
+        assertThrows(IllegalArgumentException.class, () -> translatable.putIfAbsent(null, () -> "val"));
         assertThrows(IllegalArgumentException.class, () -> translatable.putIfAbsent("", (s) -> "val"));
+        assertThrows(IllegalArgumentException.class, () -> translatable.putIfAbsent("", () -> "val"));
     }
 
     @Test
-    void testPutIfNotExists_whenPassedNullMappingFunction_thenThrowsError() {
-        var translatable = express("testKey");
+    void testPutIfNotExists_whenPassedNullMappingFunctionOrSupplier_thenThrowsError() {
+        var translatable = new TranslatableMessage("testKey");
         assertThrows(IllegalArgumentException.class,
                 () -> translatable.putIfAbsent("testKey", (Function<String, Object>) null));
+        assertThrows(IllegalArgumentException.class,
+                () -> translatable.putIfAbsent("testKey", (Supplier<Object>) null));
     }
 
     @Test
     void testPutIfNotExists_whenPassedAlreadyExistingParamKey_thenDoesNotGetCalled() {
         var expectedParamKey = "paramKey";
         var expectedParamValue = 0;
-        var translatable = express("testKey").put(expectedParamKey, expectedParamValue);
+        var translatable = new TranslatableMessage("testKey").put(expectedParamKey, expectedParamValue);
         var called = new AtomicBoolean(false);
 
         translatable = translatable.putIfAbsent("paramKey", (s) -> {
+            called.set(true);
+            return expectedParamValue;
+        });
+        translatable = translatable.putIfAbsent("paramKey", () -> {
             called.set(true);
             return expectedParamValue;
         });
@@ -92,10 +100,10 @@ class TranslatableMessageTest {
     }
 
     @Test
-    void testPutIfNotExists_whenPassedNewParamKey_thenCalculatesAndPuts() {
+    void testPutIfNotExistsWithFunction_whenPassedNewParamKey_thenCalculatesAndPuts() {
         var expectedParamKey = "paramKey";
         var expectedParamValue = 0;
-        var translatable = express("testKey");
+        var translatable = new TranslatableMessage("testKey");
         var called = new AtomicBoolean(false);
 
         translatable = translatable.putIfAbsent("paramKey", (s) -> {
@@ -107,9 +115,24 @@ class TranslatableMessageTest {
     }
 
     @Test
+    void testPutIfNotExistsWithSupplier_whenPassedNewParamKey_thenCalculatesAndPuts() {
+        var expectedParamKey = "paramKey";
+        var expectedParamValue = 0;
+        var translatable = new TranslatableMessage("testKey");
+        var called = new AtomicBoolean(false);
+
+        translatable = translatable.putIfAbsent("paramKey", () -> {
+            called.set(true);
+            return expectedParamValue;
+        });
+        assertTrue(called.get());
+        assertEquals(Map.of(expectedParamKey, expectedParamValue), translatable.getParameters());
+    }
+
+    @Test
     void testToString_whenCalled_thenOk() {
         var expectedResult = "Translatable(key=test, parameters={p1=v1, p2=v2})";
-        var translatable = express("test")
+        var translatable = new TranslatableMessage("test")
                 .put("p1", "v1")
                 .put("p2", "v2");
 
