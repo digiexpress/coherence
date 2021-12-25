@@ -8,16 +8,16 @@ import java.util.Objects;
 
 /**
  * Extend this abstract class in domain classes that you want to have translations in different locales.
- * This class simply implements some boilerplate code out of the box for you.
+ * It implements some boilerplate code out of the box for you.
  */
 public abstract class TranslatableDomain implements Translatable {
     /**
-     * the cache for generate key for the domain class
+     * the cache for generated key of the domain class
      */
     private String cachedKey = null;
 
     /**
-     * This implementation simple generates the translation key from the class name.
+     * This implementation simply generates the translation key from the class name.
      * It follows the lowerCaseCamel naming convention.
      *
      * @return the key to lookup for translation

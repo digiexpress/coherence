@@ -1,7 +1,6 @@
 package ir.digiexpress.translation.translator;
 
 import ir.digiexpress.translation.Translation;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -27,13 +26,7 @@ class InMemoryTranslatorTest {
                 .thenReturn("v4 v5 default");
 
         // construct an in memory translator
-        this.translator = new InMemoryTranslator(
-                resolver,
-                Map.of(
-                        new ImmutablePair<>("message1", Locale.ENGLISH), this.message1,
-                        new ImmutablePair<>("message2", Locale.FRENCH), this.message2
-                )
-        );
+        this.translator = new InMemoryTranslator(resolver);
     }
 
     @Test
