@@ -28,7 +28,7 @@ public class InMemoryTranslator implements Translator {
      */
     public InMemoryTranslator(final MessageResolver resolver,
                               final Map<Pair<String, Locale>, String> messageTemplateMapping) throws IllegalArgumentException {
-        if (Objects.isNull(resolver)) throw new IllegalArgumentException("resolver cannot be null");
+        if (resolver == null) throw new IllegalArgumentException("resolver cannot be null");
         this.resolver = resolver;
         this.messageTemplateMapping = Objects.requireNonNullElseGet(messageTemplateMapping, HashMap::new);
     }
@@ -66,12 +66,12 @@ public class InMemoryTranslator implements Translator {
                     final Locale locale,
                     final String messageTemplate) throws IllegalArgumentException {
         this.validateMessageKey(messageKey);
-        if (Objects.isNull(locale)) throw new IllegalArgumentException("locale cannot be null");
+        if (locale == null) throw new IllegalArgumentException("locale cannot be null");
         this.messageTemplateMapping.put(new ImmutablePair<>(messageKey, locale), messageTemplate);
     }
 
     private void validateMessageKey(final String messageKey) {
-        if (Objects.isNull(messageKey)) throw new IllegalArgumentException("message key cannot be null");
+        if (messageKey == null) throw new IllegalArgumentException("message key cannot be null");
         if (messageKey.isBlank()) throw new IllegalArgumentException("message key cannot be empty");
     }
 

@@ -40,7 +40,7 @@ public class TranslatableMessage implements Translatable {
      * @throws IllegalArgumentException when the key is passed null or empty
      */
     public TranslatableMessage(final String key, final Map<String, Object> parameters) throws IllegalArgumentException {
-        if (Objects.isNull(key))
+        if (key == null)
             throw new IllegalArgumentException("key cannot be null");
         if (key.isBlank())
             throw new IllegalArgumentException("key cannot be empty");
@@ -98,7 +98,7 @@ public class TranslatableMessage implements Translatable {
     public TranslatableMessage putIfAbsent(final String paramKey,
                                            final Function<String, Object> mapping) {
         this.validateParameterKey(paramKey);
-        if (Objects.isNull(mapping)) throw new IllegalArgumentException("the parameter mapping cannot be null");
+        if (mapping == null) throw new IllegalArgumentException("the parameter mapping cannot be null");
         this.parameters.computeIfAbsent(paramKey, mapping);
         return this;
     }
@@ -116,7 +116,7 @@ public class TranslatableMessage implements Translatable {
      */
     public TranslatableMessage putIfAbsent(final String paramKey,
                                            final Supplier<Object> supplier) {
-        if (Objects.isNull(supplier)) throw new IllegalArgumentException("the supplier cannot be null");
+        if (supplier == null) throw new IllegalArgumentException("the supplier cannot be null");
         this.putIfAbsent(paramKey, s -> supplier.get());
         return this;
     }
@@ -153,7 +153,7 @@ public class TranslatableMessage implements Translatable {
     }
 
     protected final void validateParameterKey(final String paramKey) {
-        if (Objects.isNull(paramKey)) throw new IllegalArgumentException("the parameter key cannot be null");
+        if (paramKey == null) throw new IllegalArgumentException("the parameter key cannot be null");
         if (paramKey.isBlank()) throw new IllegalArgumentException("the parameter key cannot be empty");
     }
 }

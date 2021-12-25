@@ -68,7 +68,7 @@ public class RecursiveMessageResolver implements MessageResolver {
     }
 
     private void validateParamKey(final String paramKey) {
-        if (Objects.isNull(paramKey)) throw new IllegalArgumentException("parameter key cannot be null");
+        if (paramKey == null) throw new IllegalArgumentException("parameter key cannot be null");
         if (paramKey.isBlank()) throw new IllegalArgumentException("parameter key cannot be empty");
     }
 }
