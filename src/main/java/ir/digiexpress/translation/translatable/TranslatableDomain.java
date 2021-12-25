@@ -4,7 +4,6 @@ import com.google.common.base.CaseFormat;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Extend this abstract class in domain classes that you want to have translations in different locales.
@@ -18,13 +17,14 @@ public abstract class TranslatableDomain implements Translatable {
 
     /**
      * This implementation simply generates the translation key from the class name.
-     * It follows the lowerCaseCamel naming convention.
+     * The generated key follows the lowerCaseCamel naming convention.
+     * This method exploits a cached key to prevent the reflection overhead.
      *
      * @return the key to lookup for translation
      */
     @Override
     public String getKey() {
-        if (Objects.isNull(this.cachedKey))
+        if (this.cachedKey == null)
             this.cachedKey = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, this.getClass().getSimpleName());
         return this.cachedKey;
     }
