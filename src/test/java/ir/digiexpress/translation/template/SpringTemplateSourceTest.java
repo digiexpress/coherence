@@ -23,7 +23,6 @@ class SpringTemplateSourceTest {
         var springMessageSource = mock(MessageSource.class);
         when(springMessageSource.getMessage(this.defaultMessageKey, null, this.defaultLocale)).thenReturn(this.defaultMessageTemplate);
         when(springMessageSource.getMessage(this.nonExistentKey, null, this.defaultLocale)).thenReturn(null);
-        when(springMessageSource.getMessage(this.nonExistentKey, null, Locale.FRENCH)).thenReturn(null);
         this.springTemplateSource = new SpringTemplateSource(springMessageSource);
     }
 
@@ -35,6 +34,5 @@ class SpringTemplateSourceTest {
     @Test
     void testLookup_whenPassedNonExistentEntries_thenReturnsEmpty() {
         assertTrue(this.springTemplateSource.lookup(this.nonExistentKey, this.defaultLocale).isBlank());
-        assertTrue(this.springTemplateSource.lookup(this.defaultMessageKey, Locale.FRENCH).isBlank());
     }
 }

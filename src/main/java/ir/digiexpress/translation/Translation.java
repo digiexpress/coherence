@@ -35,7 +35,7 @@ public class Translation {
      * @return a recursive message resolver constructed from the default settings
      * @see RecursiveParameterInjector
      */
-    public static RecursiveParameterInjector defaultMessageResolver() {
+    public static RecursiveParameterInjector defaultMessageInjector() {
         return new RecursiveParameterInjector(
                 DEFAULT_PARAMETER_PREFIX,
                 DEFAULT_PARAMETER_SUFFIX,
