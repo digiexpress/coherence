@@ -6,9 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TranslatableDomainTest {
-    static class MockTranslatableDomain extends TranslatableDomain {
-    }
-
     @Test
     void testGetKey_whenCalledDefaultImplementation_GeneratesKeyFromClassName() {
         var translatable = new MockTranslatableDomain();
@@ -20,5 +17,8 @@ class TranslatableDomainTest {
     void testGetParameters_whenCalledDefaultImplementation_ReturnsEmptyMap() {
         var translatable = new MockTranslatableDomain();
         assertTrue(translatable.getParameters().isEmpty());
+    }
+
+    static class MockTranslatableDomain extends TranslatableDomain {
     }
 }
