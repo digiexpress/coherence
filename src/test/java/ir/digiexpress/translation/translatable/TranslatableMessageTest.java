@@ -1,6 +1,5 @@
 package ir.digiexpress.translation.translatable;
 
-import ir.digiexpress.translation.translatable.TranslatableMessage;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;

@@ -1,6 +1,5 @@
 package ir.digiexpress.translation.translatable;
 
-import ir.digiexpress.translation.translatable.TranslatableDomain;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

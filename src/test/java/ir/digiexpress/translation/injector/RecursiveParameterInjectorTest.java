@@ -1,4 +1,4 @@
-package ir.digiexpress.translation.translator;
+package ir.digiexpress.translation.injector;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,12 +8,12 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class RecursiveMessageResolverTest {
-    private RecursiveMessageResolver resolver;
+class RecursiveParameterInjectorTest {
+    private RecursiveParameterInjector resolver;
 
     @BeforeEach
     void setUp() {
-        this.resolver = new RecursiveMessageResolver("{", "}", ":-");
+        this.resolver = new RecursiveParameterInjector("{", "}", ":-");
     }
 
     @Test
@@ -52,7 +52,7 @@ class RecursiveMessageResolverTest {
         var inputTemplate = "the key {k1} is ok";
         var inputParameterMapping = Map.of("k1", (Object) "v1");
         var expected = "the key v1 is ok";
-        assertEquals(expected, this.resolver.resolve(inputTemplate, inputParameterMapping));
+        assertEquals(expected, this.resolver.inject(inputTemplate, inputParameterMapping));
     }
 
     @Test
@@ -65,7 +65,7 @@ class RecursiveMessageResolverTest {
                 "k6", "v6"
         );
         var expected = "a v1 b v2 c v3 d v4 e v5 f v6";
-        assertEquals(expected, this.resolver.resolve(inputTemplate, inputParameterMapping));
+        assertEquals(expected, this.resolver.inject(inputTemplate, inputParameterMapping));
     }
 
     @Test
@@ -77,7 +77,7 @@ class RecursiveMessageResolverTest {
                 "k3", "k4"
         );
         var expected = "a k4 b";
-        assertEquals(expected, this.resolver.resolve(inputTemplate, inputParameterMapping));
+        assertEquals(expected, this.resolver.inject(inputTemplate, inputParameterMapping));
     }
 
     @Test
@@ -89,7 +89,7 @@ class RecursiveMessageResolverTest {
                 "k2", "3"
         );
         var expected = "a k3 b";
-        assertEquals(expected, this.resolver.resolve(inputTemplate, inputParameterMapping));
+        assertEquals(expected, this.resolver.inject(inputTemplate, inputParameterMapping));
     }
 
     @Test
@@ -101,6 +101,6 @@ class RecursiveMessageResolverTest {
                 "k2", "3"
         );
         var expected = "a k3 b 3 c default";
-        assertEquals(expected, this.resolver.resolve(inputTemplate, inputParameterMapping));
+        assertEquals(expected, this.resolver.inject(inputTemplate, inputParameterMapping));
     }
 }

@@ -1,21 +1,19 @@
-package ir.digiexpress.translation.translator;
+package ir.digiexpress.translation.injector;
 
 import java.util.Map;
 
 /**
- * The interface for resolving messages from a message template and parameter mapping.
- * Parameter injection will happen inside this class.
+ * The interface for injecting parameters inside messages templates.
  */
-public interface MessageResolver {
+public interface ParameterInjector {
     /**
-     * The main responsibility of this interface
-     * is to resolve a message from its message template and parameter mapping
+     * Inject a parameter mapping into a given message template.
      *
      * @param messageTemplate  the template of the message
      * @param parameterMapping mapping of parameters to inject inside the message template
-     * @return the resolved message that has the parameters injected into it
+     * @return the result message that has the parameters injected into it
      */
-    String resolve(final String messageTemplate, final Map<String, Object> parameterMapping);
+    String inject(final String messageTemplate, final Map<String, Object> parameterMapping);
 
     /**
      * This method returns a declarative string form of a parameter e.g. {@code "{paramKey:-defaultValue}"}
@@ -28,7 +26,7 @@ public interface MessageResolver {
 
     /**
      * This method returns a declarative string form of a parameter e.g. {@code "{paramKey}"}.
-     * Unlike {@link MessageResolver#declareParameter(String, String)}
+     * Unlike {@link ParameterInjector#declareParameter(String, String)}
      * it does not inject a default value for the parameter
      *
      * @param paramKey the key of the parameter

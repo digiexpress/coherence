@@ -1,7 +1,7 @@
 package ir.digiexpress.translation;
 
+import ir.digiexpress.translation.injector.RecursiveParameterInjector;
 import ir.digiexpress.translation.translatable.TranslatableMessage;
-import ir.digiexpress.translation.translator.RecursiveMessageResolver;
 
 /**
  * This class includes static utility methods for any functionalities happening inside
@@ -30,13 +30,13 @@ public class Translation {
     }
 
     /**
-     * Quickly create a {@link RecursiveMessageResolver} using default settings
+     * Quickly create a {@link RecursiveParameterInjector} using default settings
      *
      * @return a recursive message resolver constructed from the default settings
-     * @see RecursiveMessageResolver
+     * @see RecursiveParameterInjector
      */
-    public static RecursiveMessageResolver defaultMessageResolver() {
-        return new RecursiveMessageResolver(
+    public static RecursiveParameterInjector defaultMessageResolver() {
+        return new RecursiveParameterInjector(
                 DEFAULT_PARAMETER_PREFIX,
                 DEFAULT_PARAMETER_SUFFIX,
                 DEFAULT_DEFAULT_VALUE_DELIMITER

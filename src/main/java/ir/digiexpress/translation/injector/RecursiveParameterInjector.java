@@ -1,4 +1,4 @@
-package ir.digiexpress.translation.translator;
+package ir.digiexpress.translation.injector;
 
 import org.apache.commons.text.StringSubstitutor;
 
@@ -6,10 +6,11 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Production ready implementation of {@link MessageResolver}.
+ * Production ready implementation of {@link ParameterInjector}.
  * It recursively substitutes the keys for parameter injection.
+ * No caching or optimization is done whatsoever
  */
-public class RecursiveMessageResolver implements MessageResolver {
+public class RecursiveParameterInjector implements ParameterInjector {
     /**
      * A parameter should be declared inside message template for injection.
      * As an example {paramKey:-defaultValue} is a parameter declaration with the following specs:
@@ -29,9 +30,9 @@ public class RecursiveMessageResolver implements MessageResolver {
      * @param defaultValueDelimiter the delimiter that separates parameter key from the default value
      * @throws IllegalArgumentException if any of the passed parameters are null or empty
      */
-    public RecursiveMessageResolver(final String parameterPrefix,
-                                    final String parameterSuffix,
-                                    final String defaultValueDelimiter) throws IllegalArgumentException {
+    public RecursiveParameterInjector(final String parameterPrefix,
+                                      final String parameterSuffix,
+                                      final String defaultValueDelimiter) throws IllegalArgumentException {
         this.parameterPrefix = parameterPrefix;
         this.parameterSuffix = parameterSuffix;
         this.defaultValueDelimiter = defaultValueDelimiter;
@@ -53,7 +54,7 @@ public class RecursiveMessageResolver implements MessageResolver {
     }
 
     @Override
-    public String resolve(final String messageTemplate, final Map<String, Object> parameterMapping) {
+    public String inject(final String messageTemplate, final Map<String, Object> parameterMapping) {
         return this.buildParameterSubstitutor(parameterMapping).replace(messageTemplate);
     }
 

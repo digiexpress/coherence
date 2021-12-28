@@ -7,7 +7,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
- * This class is for the messages of the domain, it carries a key to a message template and some context within it.
+ * This class is for the messages, it carries a key to a message template and some context within it.
  * Note that this class is NOT thread safe.
  */
 public class TranslatableMessage implements Translatable {
