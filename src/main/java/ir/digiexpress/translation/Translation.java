@@ -1,6 +1,5 @@
 package ir.digiexpress.translation;
 
-import ir.digiexpress.translation.injector.RecursiveParameterInjector;
 import ir.digiexpress.translation.translatable.TranslatableMessage;
 
 /**
@@ -8,10 +7,6 @@ import ir.digiexpress.translation.translatable.TranslatableMessage;
  * {@link ir.digiexpress.translation} package
  */
 public class Translation {
-    public static final String DEFAULT_PARAMETER_PREFIX = "{";
-    public static final String DEFAULT_PARAMETER_SUFFIX = "}";
-    public static final String DEFAULT_DEFAULT_VALUE_DELIMITER = ":-";
-
     /**
      * Just to hide the implicit constructor of this class
      */
@@ -27,19 +22,5 @@ public class Translation {
      */
     public static TranslatableMessage message(final String key) {
         return new TranslatableMessage(key, null);
-    }
-
-    /**
-     * Quickly create a {@link RecursiveParameterInjector} using default settings
-     *
-     * @return a recursive message resolver constructed from the default settings
-     * @see RecursiveParameterInjector
-     */
-    public static RecursiveParameterInjector defaultMessageInjector() {
-        return new RecursiveParameterInjector(
-                DEFAULT_PARAMETER_PREFIX,
-                DEFAULT_PARAMETER_SUFFIX,
-                DEFAULT_DEFAULT_VALUE_DELIMITER
-        );
     }
 }
