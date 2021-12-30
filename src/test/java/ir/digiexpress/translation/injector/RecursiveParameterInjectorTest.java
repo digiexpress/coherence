@@ -31,14 +31,22 @@ class RecursiveParameterInjectorTest {
 
     @Test
     void testDeclareParameter_whenParamKeyIsNullOrEmpty_thenThrowsError() {
-        assertThrows(IllegalArgumentException.class,
-                () -> this.injector.declareParameter(null, "defaultValue"));
-        assertThrows(IllegalArgumentException.class,
-                () -> this.injector.declareParameter("", "defaultValue"));
-        assertThrows(IllegalArgumentException.class,
-                () -> this.injector.declareParameter(null));
-        assertThrows(IllegalArgumentException.class,
-                () -> this.injector.declareParameter(""));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.injector.declareParameter(null, "defaultValue")
+        );
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.injector.declareParameter("", "defaultValue")
+        );
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.injector.declareParameter(null)
+        );
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.injector.declareParameter("")
+        );
     }
 
     @Test
