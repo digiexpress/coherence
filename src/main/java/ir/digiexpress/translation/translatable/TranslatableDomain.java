@@ -13,7 +13,7 @@ public abstract class TranslatableDomain implements Translatable {
     /**
      * the cache for generated key of the domain class
      */
-    private String cachedKey = null;
+    private transient String cachedKey = null;
 
     /**
      * This implementation simply generates the translation key from the class name.

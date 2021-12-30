@@ -1,4 +1,4 @@
-package ir.digiexpress.translation.injector;
+package ir.digiexpress.translation.injection;
 
 import java.util.Map;
 

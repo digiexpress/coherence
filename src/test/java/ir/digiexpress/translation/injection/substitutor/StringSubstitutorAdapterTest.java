@@ -1,4 +1,4 @@
-package ir.digiexpress.translation.injector;
+package ir.digiexpress.translation.injection.substitutor;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -6,20 +6,21 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 
+import static ir.digiexpress.translation.injection.substitutor.StringSubstitutorAdapter.options;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class RecursiveParameterInjectorTest {
-    private RecursiveParameterInjector injector;
+class StringSubstitutorAdapterTest {
+    private StringSubstitutorAdapter injector;
 
     @BeforeEach
     void setUp() {
-        this.injector = new RecursiveParameterInjector("{", "}", ":-", '\\');
+        this.injector = new StringSubstitutorAdapter(options().build());
     }
 
     @Test
     void testDeclareParameter_whenHasDefaultValue_thenInjectsIt() {
-        var expected = "{hello:-defaultValue}";
+        var expected = "{hello:defaultValue}";
         assertEquals(expected, this.injector.declareParameter("hello", "defaultValue"));
     }
 
@@ -51,7 +52,7 @@ class RecursiveParameterInjectorTest {
 
     @Test
     void testDeclareParameter_whenDefaultValueIsNullOrEmpty_thenInjectsIt() {
-        var expected = "{hello:-}";
+        var expected = "{hello:}";
         assertEquals(expected, this.injector.declareParameter("hello", null));
         assertEquals(expected, this.injector.declareParameter("hello", ""));
     }
@@ -66,7 +67,7 @@ class RecursiveParameterInjectorTest {
 
     @Test
     void testInject_whenMultipleInjectionsAndDefaultValues_thenOk() {
-        var inputTemplate = "a {k1} b {k2} c {k3:-v3} d {k4} e {k5:-v5} f {k6:-v7}";
+        var inputTemplate = "a {k1} b {k2} c {k3:v3} d {k4} e {k5:v5} f {k6:v7}";
         var inputParameterMapping = Map.of(
                 "k1", (Object) "v1",
                 "k2", "v2",
@@ -102,8 +103,8 @@ class RecursiveParameterInjectorTest {
     }
 
     @Test
-    void testInject_whenAllCases_thenOk() {
-        var inputTemplate = "a k{k{k{v}}} b {k2} c {k3:-default}";
+    void testInject_whenAllCasesCombined_thenOk() {
+        var inputTemplate = "a k{k{k{v}}} b {k2} c {k3:default}";
         var inputParameterMapping = Map.<String, Object>of(
                 "v", "1",
                 "k1", "2",
@@ -117,8 +118,8 @@ class RecursiveParameterInjectorTest {
     void testInject_whenPassedOpenTemplateMessage_thenActAsExpected() {
         var inputs = List.of(
                 "{open",
-                "{hey:-oops} {open:-secondOops",
-                "{hey:-oops} {open:-secondOops {open}"
+                "{hey:oops} {open:secondOops",
+                "{hey:oops} {open:secondOops {open}"
         );
         var inputMappings = List.of(
                 Map.<String, Object>of("open", "another"),
@@ -127,8 +128,8 @@ class RecursiveParameterInjectorTest {
         );
         var expectedTranslations = List.of(
                 "{open",
-                "oops {open:-secondOops",
-                "oops {open:-secondOops {open}"
+                "oops {open:secondOops",
+                "oops {open:secondOops {open}"
         );
         for (int testIdx = 0; testIdx < inputs.size(); testIdx++)
             assertEquals(

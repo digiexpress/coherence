@@ -1,6 +1,6 @@
 package ir.digiexpress.translation.template;
 
-import ir.digiexpress.translation.injector.ParameterInjector;
+import ir.digiexpress.translation.injection.ParameterInjector;
 
 import java.util.Locale;
 
