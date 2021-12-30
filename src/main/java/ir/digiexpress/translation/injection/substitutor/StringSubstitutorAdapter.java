@@ -29,12 +29,12 @@ public final class StringSubstitutorAdapter implements ParameterInjector {
     }
 
     /**
-     * Quickly constructs a {@link StringSubstitutorBuilder} instance
+     * Quickly constructs a {@link StringSubstitutorOptionsBuilder} instance
      *
      * @return builder instance with default parameters set on it.
      */
-    public static StringSubstitutorBuilder options() {
-        return new StringSubstitutorBuilder();
+    public static StringSubstitutorOptionsBuilder options() {
+        return new StringSubstitutorOptionsBuilder();
     }
 
     /**

@@ -6,45 +6,45 @@ import ir.digiexpress.utils.Assertions;
  * A builder class for {@link StringSubstitutorOptions}.
  * This class also ensures the validity of the config variables.
  */
-public class StringSubstitutorBuilder {
+public class StringSubstitutorOptionsBuilder {
     private String parameterPrefix = "{";
     private String parameterSuffix = "}";
     private String defaultValueDelimiter = ":";
     private char escapeCharacter = '\\';
     private boolean preserveEscapes = true;
 
-    StringSubstitutorBuilder() {
+    StringSubstitutorOptionsBuilder() {
     }
 
-    public StringSubstitutorBuilder withPrefix(final String prefix) {
+    public StringSubstitutorOptionsBuilder withPrefix(final String prefix) {
         Assertions.notEmpty(prefix, "prefix");
         this.parameterPrefix = prefix;
         return this;
     }
 
-    public StringSubstitutorBuilder withSuffix(final String suffix) {
+    public StringSubstitutorOptionsBuilder withSuffix(final String suffix) {
         Assertions.notEmpty(suffix, "suffix");
         this.parameterSuffix = suffix;
         return this;
     }
 
-    public StringSubstitutorBuilder withDefaultValueDelimiter(final String delimiter) {
+    public StringSubstitutorOptionsBuilder withDefaultValueDelimiter(final String delimiter) {
         Assertions.notEmpty(delimiter, "delimiter");
         this.defaultValueDelimiter = delimiter;
         return this;
     }
 
-    public StringSubstitutorBuilder withEscapeChar(final char escapeChar) {
+    public StringSubstitutorOptionsBuilder withEscapeChar(final char escapeChar) {
         this.escapeCharacter = escapeChar;
         return this;
     }
 
-    public StringSubstitutorBuilder preserveEscapes() {
+    public StringSubstitutorOptionsBuilder preserveEscapes() {
         this.preserveEscapes = true;
         return this;
     }
 
-    public StringSubstitutorBuilder doNotPreserveEscapes() {
+    public StringSubstitutorOptionsBuilder doNotPreserveEscapes() {
         this.preserveEscapes = false;
         return this;
     }

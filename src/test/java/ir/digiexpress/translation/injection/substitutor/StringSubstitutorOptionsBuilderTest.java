@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class StringSubstitutorBuilderTest {
-    private StringSubstitutorBuilder builder;
+class StringSubstitutorOptionsBuilderTest {
+    private StringSubstitutorOptionsBuilder builder;
 
     @BeforeEach
     void setup() {
-        this.builder = new StringSubstitutorBuilder()
+        this.builder = new StringSubstitutorOptionsBuilder()
                 .doNotPreserveEscapes()
                 .preserveEscapes()
                 .withDefaultValueDelimiter(":")
