@@ -5,7 +5,7 @@ public class Assertions {
     }
 
     /**
-     * Utility method for the library
+     * Utility method for the library that asserts a given String is not null or blank
      *
      * @param value      passed value to check
      * @param identifier identifier of the value
