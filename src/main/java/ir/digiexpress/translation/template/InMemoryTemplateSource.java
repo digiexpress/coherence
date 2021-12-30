@@ -39,7 +39,7 @@ public class InMemoryTemplateSource implements MessageTemplateSource {
     }
 
     /**
-     * Puts a message template in its memory
+     * Puts a message template in its memory. If the messageKey already exists, it will be overwritten.
      *
      * @param messageKey      the key of the message template
      * @param locale          the locale of the message template
